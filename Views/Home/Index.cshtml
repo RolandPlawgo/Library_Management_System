@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model IEnumerable<LibraryManagementSystem.Models.BookModel>
+
+<div class="text-center">
+    <form asp-action="Index">
+        <div class="container">
+            <div class="row">
+                <input type="text" value="@ViewData["searchString"]" placeholder="Search for books by title or author" name="searchString" class="col-10" style="border-radius: 10px" />
+                @* <input type="submit" class="btn form-control" style="background-color: #030303; margin-left: 50px; padding-left: 30px; padding-right: 30px; border-radius: 20%" /> *@
+                <button type="submit" class="btn small-button text-light col-1 offset-1">Search</button>
+            </div>
+        </div>
+    </form>
+    @foreach (var book in Model)
+    {
+        <div @* class="stretched-link" *@>
+        <div class="card mb-3" style="border-radius: 10px; height: 120px; margin-top: 10px">
+            <div class="row g-0">
+                    <div class="col-md-2">
+                        @if (book.Image is not null)
+                        {
+                            <img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.Image))" class="img-fluid rounded-start" alt="book cover" style="height: 120px">
+                        }
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: left">@book.Title</h5>
+                        <p class="card-text" style="text-align: left">@book.Author</p>
+                        <p class="card-text" style="text-align: left"><small class="text-muted">@book.Publisher</small></p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div style="line-height: 120px">
+                    @if (book.Availability)
+                    {
+                        <p style="color: #56b652; vertical-align: middle"><small>available</small></p>
+                    }
+                    else
+                    {
+                        <p style="color: #b65252; vertical-align: middle"><small>not available</small></p>
+                    }
+                    </div>
+                </div>
+            </div>
+            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="stretched-link"></a>
+        </div>
+        </div>
+    }
+
+
+
+
+
+    @* <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadFile">
+        <input type="file" name="postedFile" />
+        <input type="text" name="title" />
+        <input type="text" name="author" />
+        <input type="text" name="publisher" />
+        <input type="text" name="description" />
+        <input type="submit" id="btnUpload" value="Upload" />
+    </form> *@
+</div>

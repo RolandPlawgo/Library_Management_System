@@ -1,0 +1,43 @@
+﻿@using LibraryManagementSystem.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model LibraryManagementSystem.Models.BookModel;
+@{
+	ViewData["Title"] = "Book Details";
+}
+
+<h1 class="h2">@Model.Title</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-3">
+			@if (Model.Image is not null)
+			{
+				<img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(Model.Image))" class="img-fluid rounded-start" alt="book cover" style="height: 250px">
+			}
+		</div>
+		<div class="col-8 offset-1">
+			<h3 class="h5 card-title">@Model.Title</h3>
+			<p class="card-text" style="text-align: left">@Model.Author</p>
+			@* <p class="card-text" style="text-align: left"><small class="text-muted">@Model.Publisher</small></p> *@
+			<p class="card-text" style="text-align: left">@Model.Publisher</p>
+			<br/>
+			@if (Model.Availability)
+			{
+				<p style="color: #56b652"><small>available</small></p>
+				@if (SignInManager.IsSignedIn(User) && Model.UserReservingId == null)
+				{
+					<form asp-controller="UserAccounts" asp-action="ReserveBook" asp-route-id="@Model.Id">
+						<input type="submit" value="Reserve" class="btn btn-sm btn-outline-secondary"/>
+					</form>
+				}
+			}
+			else
+			{
+				<p style="color: #b65252"><small>not available</small></p>
+			}
+		</div>
+	</div>
+	<h2 class="h3">Description</h2>
+	<p>@Model.Description</p>
+</div>

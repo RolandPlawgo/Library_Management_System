@@ -1,0 +1,53 @@
+﻿@using LibraryManagementSystem.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> userManager;
+@model UserAccountModel;
+@{
+}
+
+<h1 class="h1">Account details</h1>
+<hr/>
+<h2 class="h3">Reserved books</h2>
+<ul>
+	@foreach(BookModel book in Model.ReservedBooks)
+	{
+		<li>
+			<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
+		</li>
+	}
+</ul>
+<hr/>
+<h2 class="h3">Borrowed books</h2>
+<ul>
+	@foreach (BookModel book in Model.BorrowedBooks)
+	{
+		<li>
+			<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
+		</li>
+	}
+</ul>
+<h2 class="h3">Personal information</h2>
+<table class="table">
+	<tbody>
+		<tr>
+			<td>First name</td>
+			<td>@(userManager.GetUserAsync(User).Result?.FirstName ?? "")</td>
+		</tr>
+		<tr>
+			<td>Last name</td>
+			<td>@(userManager.GetUserAsync(User).Result?.LastName ?? "")</td>
+		</tr>
+		<tr>
+			<td>Email address</td>
+			<td>@(userManager.GetUserAsync(User).Result?.Email ?? "")</td>
+		</tr>
+		<tr>
+			<td>Phone number</td>
+			<td>@(userManager.GetUserAsync(User).Result?.PhoneNumber ?? "")</td>
+		</tr>
+		<tr>
+			<td>Date of birth</td>
+			<td>@userManager.GetUserAsync(User).Result?.DateOfBirth.Date.ToShortDateString()</td>
+		</tr>
+	</tbody>
+</table>

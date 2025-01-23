@@ -1,0 +1,56 @@
+$primary: #e5e5e5;
+$body-bg: #fff;
+$secondary: #8300d9;
+@import "~node_modules/bootstrap/scss/bootstrap";
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1400px) {
+    main {
+        margin-left: 50px;
+        margin-right: 200px;
+    }
+
+    nav {
+        padding-left: 50px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.small-button {
+    background-color: #030303;
+    border-radius: 15px;
+}
+
+.button {
+    background-color: #030303;
+    padding-left: 30px;
+    padding-right: 30px;
+    /*border-radius: 10%*/
+    border-radius: 5px;
+}
+
+.narrow-button {
+    background-color: #030303;
+    /*border-radius: 10%*/
+    border-radius: 5px;
+}
