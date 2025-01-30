@@ -41,13 +41,11 @@ var app = builder.Build();
 
 using (var serviceScope = app.Services.CreateScope())
 {
-	//var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-	//context.Database.Migrate();
-
+	var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+	context.Database.Migrate();
 
 
 	var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-	var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
 	var user = new ApplicationUser()
 	{
