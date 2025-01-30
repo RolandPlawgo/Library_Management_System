@@ -1,9 +1,13 @@
 # LibraryManagementSystem
 
-user account:
-library card number: U123456
-password: Qwerty1!
+Default accounts:
 
-admin account:
-library card number: A123456
-password: Qwerty1!
+
+user account: <br/>
+library card number: U123456 <br/>
+password: Qwerty1! <br/>
+
+
+administrator account: <br/>
+library card number: A123456 <br/>
+password: Qwerty1! <br/>
