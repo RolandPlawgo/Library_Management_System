@@ -1,0 +1,37 @@
+﻿
+@{
+	ViewData["Title"] = "Add new book";
+}
+@model LibraryManagementSystem.Models.BookModel
+
+<h1 class="h3">Add new book</h1>
+
+<form asp-action="Create" enctype="multipart/form-data">
+	<div>
+		<label>Title</label>
+		<input type="text" asp-for="Title" class="form-control"/>
+	</div>
+	<div>
+		<label>Author</label>
+		<input type="text" asp-for="Author" class="form-control"/>
+	</div>
+	<div>
+		<label>Description</label>
+		<input type="text" asp-for="Description" class="form-control" />
+	</div>
+	<div>
+		<label>Publisher</label>
+		<input type="text" asp-for="Publisher" class="form-control" />
+	</div>
+	<div>
+		<label>Availability</label>
+		<input type="checkbox" asp-for="Availability" class="form-check" />
+	</div>
+	<div>
+		<label>Image</label>
+		<input type="file" name="image" />
+	</div>
+	<div>
+		<input type="submit" class="btn small-button text-light" value="Add" />
+	</div>
+</form>

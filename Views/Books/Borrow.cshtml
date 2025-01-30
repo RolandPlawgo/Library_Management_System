@@ -1,0 +1,31 @@
+﻿@model LibraryManagementSystem.Models.BookModel;
+@{
+}
+
+<h1 class="h3">Borrowing</h1>
+<table class="table">
+	<tbody>
+		<tr>
+			<td>Title</td>
+			<td>@Model.Title</td>
+		</tr>
+		<tr>
+			<td>Author</td>
+			<td>@Model.Author</td>
+		</tr>
+		<tr>
+			<td>Publisher</td>
+			<td>@Model.Publisher</td>
+		</tr>
+	</tbody>
+</table>
+<form asp-controller="UserAccounts" asp-action="BorrowBook" asp-route-bookId="@Model.Id">
+	<div>
+		<label>Library card number</label>
+		<input type="text" name="libraryCardNumber" class="form-control" />
+	</div>
+	<br/>
+	<div>
+		<input type="submit" value="Save" class="btn button text-light"/>
+	</div>
+</form>

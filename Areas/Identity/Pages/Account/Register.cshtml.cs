@@ -30,7 +30,7 @@ namespace LibraryManagementSystem.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
 
         public RegisterModel(
@@ -38,7 +38,7 @@ namespace LibraryManagementSystem.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, 
+            //IEmailSender emailSender, 
             ApplicationDbContext context)
         {
             _userManager = userManager;
@@ -46,7 +46,7 @@ namespace LibraryManagementSystem.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            //_emailSender = emailSender;
             _context = context;
         }
 
@@ -151,6 +151,7 @@ namespace LibraryManagementSystem.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
+                user.DateOfBirth = Input.DateOfBirth;
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 //await _emailStore.SetEmailAsync(user, Input.UserName, CancellationToken.None);

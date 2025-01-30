@@ -11,11 +11,13 @@ namespace LibraryManagementSystem.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly BookAvailability _availability;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, BookAvailability availability)
         {
             _logger = logger;
             _context = context;
+            _availability = availability;
         }
 
         public IActionResult Index(string? searchString = null)
@@ -41,31 +43,6 @@ namespace LibraryManagementSystem.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-
-        [HttpPost]
-        public IActionResult UploadFile(IFormFile postedFile, string title, string author, string publisher, string description)
-        {
-            string fileName = Path.GetFileName(postedFile.FileName);
-            //string contentType = postedFile.ContentType;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                postedFile.CopyTo(ms);
-                BookModel book = new BookModel()
-                {
-                    Title = title,
-                    Author = author,
-                    Description = description,
-                    Publisher = publisher,
-                    Image = ms.ToArray(),
-                    Availability = true
-                };
-                _context.Books.Add(book);
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
         }
     }
 }

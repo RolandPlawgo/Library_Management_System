@@ -1,0 +1,39 @@
+﻿@using LibraryManagementSystem.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model LibraryManagementSystem.Models.BookModel;
+@{
+	ViewData["Title"] = "Edit book";
+}
+
+<h1 class="h3">Edit book @Model.Title</h1>
+<form asp-action="Edit" enctype="multipart/form-data">
+	<div>
+		<label>Title</label>
+		<input type="text" asp-for="Title" class="form-control"/>
+	</div>
+	<div>
+		<label>Author</label>
+		<input type="text" asp-for="Author" class="form-control"/>
+	</div>
+	<div>
+		<label>Description</label>
+		<input type="text" asp-for="Description" class="form-control"/>
+	</div>
+	<div>
+		<label>Publisher</label>
+		<input type="text" asp-for="Publisher" class="form-control"/>
+	</div>
+	<div>
+		<label>Availability</label>
+		<input type="checkbox" asp-for="Availability" class="form-check"/>
+	</div>
+	<div>
+		<label>Image</label>
+		<input type="file" name="image" />
+	</div>
+	<div>
+		<input type="submit" class="btn small-button text-light" value="Save" />
+	</div>
+</form>

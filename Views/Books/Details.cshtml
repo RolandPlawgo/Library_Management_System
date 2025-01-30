@@ -25,7 +25,8 @@
 			@if (Model.Availability)
 			{
 				<p style="color: #56b652"><small>available</small></p>
-				@if (SignInManager.IsSignedIn(User) && Model.UserReservingId == null)
+				@* @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Administrator") && Model.UserReservingId == null) *@
+				@if (SignInManager.IsSignedIn(User) && !User.IsInRole("Administrator") && Model.Availability)
 				{
 					<form asp-controller="UserAccounts" asp-action="ReserveBook" asp-route-id="@Model.Id">
 						<input type="submit" value="Reserve" class="btn btn-sm btn-outline-secondary"/>
@@ -35,6 +36,22 @@
 			else
 			{
 				<p style="color: #b65252"><small>not available</small></p>
+			}
+			@if (User.IsInRole("Administrator"))
+			{
+				@if (ViewData["UserBorrowing"]?.ToString() != "")
+				{
+					<p>Borrowed by: @ViewData["UserBorrowing"]</p>
+				}
+				@if (ViewData["UserReserving"]?.ToString() != "")
+				{
+					<p>Reserved by: @ViewData["UserReserving"]</p>
+				}
+
+				<form asp-action="Delete" asp-route-id="@Model.Id">
+					<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Edit</a>
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
 			}
 		</div>
 	</div>

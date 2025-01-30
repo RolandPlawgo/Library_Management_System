@@ -1,0 +1,52 @@
+﻿@using LibraryManagementSystem.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> userManager;
+@model List<LibraryManagementSystem.Authentication.ApplicationUser>;
+@{
+	ViewData["Title"] = "Users";
+}
+
+<h1 class="h2">Users</h1>
+<br/>
+<div class="container">
+	<div class="row">
+		<a asp-action="Create" class="btn small-button text-light col-2">Add user</a>
+		@* <a asp-page="Register" class="btn small-button text-light col-2">Add user</a> *@
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Library card number</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			@* <th>Phone number</th>
+			<th>Date of birth</th> *@
+			<th>Role</th>
+			<th></th>
+			@* <th></th> *@
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var user in Model)
+		{
+			<tr>
+				<td>@user.UserName</td>
+				<td>@user.FirstName</td>
+				<td>@user.LastName</td>
+				@* <td>@user.PhoneNumber</th>
+				<td>@user.DateOfBirth.Date</th> *@
+				<td>@((await userManager.GetRolesAsync(user)).FirstOrDefault())</td>
+				<td><a asp-controller="UserAccounts" asp-action="Details" asp-route-id="@user.Id">Account details</a></td>
+				@* <td><a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-outline-secondary">edit</a></td> *@
+				<td>
+					<form asp-action="Delete" asp-route-id="@user.Id">
+						<button type="submit" class="btn btn-outline-danger">delete</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

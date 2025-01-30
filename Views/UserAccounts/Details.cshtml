@@ -6,48 +6,89 @@
 }
 
 <h1 class="h1">Account details</h1>
-<hr/>
-<h2 class="h3">Reserved books</h2>
-<ul>
+<br/>
+@if (@Model.ReservedBooks.Count() != 0)
+{
+	<h2 class="h3">Reserved books</h2>
+	<table class="table">
+	<thead>
+		<tr>
+			<th class="col-10">Book</th>
+			<th class="col2">Due date</th>
+		</tr>
+	</thead>
+	<tbody>
 	@foreach(BookModel book in Model.ReservedBooks)
 	{
-		<li>
-			<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
-		</li>
+		<tr>
+			<td class="col-10">
+				<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
+			</td>
+			<td class="col-2">@(book.ReservationDueDate?.ToShortDateString() ?? "")</td>
+		</tr>
 	}
-</ul>
-<hr/>
-<h2 class="h3">Borrowed books</h2>
-<ul>
-	@foreach (BookModel book in Model.BorrowedBooks)
-	{
-		<li>
-			<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
-		</li>
-	}
-</ul>
+	</tbody>
+	</table>
+	<br/>
+}
+@if (@Model.BorrowedBooks.Count() != 0)
+{
+	<h2 class="h3">Borrowed books</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="col-10">Book</th>
+				<th class="col2">Due date</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (BookModel book in Model.BorrowedBooks)
+			{
+				<tr>
+					<td class="col-10">
+						<span class="h6">@book.Title</span>, <small>@book.Author</small>, <small>@book.Publisher</small>
+					</td>
+					<td class="col-2">@(book.BorrowingDueDate?.ToShortDateString() ?? "")</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<br/>
+}
+
 <h2 class="h3">Personal information</h2>
 <table class="table">
 	<tbody>
 		<tr>
+			<td>Library card number</td>
+			<td>@(userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.UserName ?? "")</td>
+		</tr>
+		<tr>
 			<td>First name</td>
-			<td>@(userManager.GetUserAsync(User).Result?.FirstName ?? "")</td>
+			<td>@(userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.FirstName ?? "")</td>
 		</tr>
 		<tr>
 			<td>Last name</td>
-			<td>@(userManager.GetUserAsync(User).Result?.LastName ?? "")</td>
+			<td>@(userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.LastName ?? "")</td>
 		</tr>
 		<tr>
 			<td>Email address</td>
-			<td>@(userManager.GetUserAsync(User).Result?.Email ?? "")</td>
+			<td>@(userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.Email ?? "")</td>
 		</tr>
 		<tr>
 			<td>Phone number</td>
-			<td>@(userManager.GetUserAsync(User).Result?.PhoneNumber ?? "")</td>
+			<td>@(userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.PhoneNumber ?? "")</td>
 		</tr>
 		<tr>
 			<td>Date of birth</td>
-			<td>@userManager.GetUserAsync(User).Result?.DateOfBirth.Date.ToShortDateString()</td>
+			<td>@userManager.Users.Where(u => u.Id == @Model.Id).FirstOrDefault()?.DateOfBirth.ToShortDateString()</td>
 		</tr>
 	</tbody>
 </table>
+
+@* <button asp-page="/Areas/Identity/Pages/Account/ResetPassword" class="btn btn-outline-secondary">Change password</button> *@
+@* <a asp-area="Identity" asp-page="/Account/ResetPassword" class="btn btn-outline-secondary">Change password</a> *@
+@if (userManager.GetUserId(User) == Model.Id)
+{
+	<a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="btn btn-outline-secondary">Change password</a>
+}

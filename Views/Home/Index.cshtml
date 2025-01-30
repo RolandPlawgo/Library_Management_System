@@ -1,9 +1,23 @@
-﻿@{
+﻿@using LibraryManagementSystem.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
 @model IEnumerable<LibraryManagementSystem.Models.BookModel>
 
+
 <div class="text-center">
+
+    @if (User.IsInRole("Administrator"))
+    {
+        <div class="container">
+            <div class="row">
+            <a asp-controller="Books" asp-action="Create" class="btn small-button text-light col-2">Add book</a>
+            </div>
+        </div>
+        <br/>
+    }
     <form asp-action="Index">
         <div class="container">
             <div class="row">
@@ -15,14 +29,13 @@
     </form>
     @foreach (var book in Model)
     {
-        <div @* class="stretched-link" *@>
-        <div class="card mb-3" style="border-radius: 10px; height: 120px; margin-top: 10px">
+        <div class="card mb-3" style="border-radius: 10px; margin-top: 10px">
             <div class="row g-0">
-                    <div class="col-md-2">
-                        @if (book.Image is not null)
-                        {
-                            <img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.Image))" class="img-fluid rounded-start" alt="book cover" style="height: 120px">
-                        }
+                <div class="col-md-2">
+                    @if (book.Image is not null)
+                    {
+                        <img src="@string.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(book.Image))" class="img-fluid rounded-start" alt="book cover" style="height: 160px">
+                    }
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -46,19 +59,14 @@
             </div>
             <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="stretched-link"></a>
         </div>
-        </div>
+
+
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="row">
+                <a asp-controller="Books" asp-action="Borrow" asp-route-id="@book.Id" class="col-1">borrow</a>
+                <a asp-controller="Books" asp-action="Return" asp-route-id="@book.Id" class="col-1">return</a>
+            </div>
+        }
     }
-
-
-
-
-
-    @* <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadFile">
-        <input type="file" name="postedFile" />
-        <input type="text" name="title" />
-        <input type="text" name="author" />
-        <input type="text" name="publisher" />
-        <input type="text" name="description" />
-        <input type="submit" id="btnUpload" value="Upload" />
-    </form> *@
 </div>
